@@ -1,0 +1,11 @@
+import express from "express";
+import { register, login, logout, updateProfile, getProfile } from "../controllers/authController.js";
+import { validateRegister, validateLogin, validateUpdate } from "../middleware/validateAuth.js";
+import authMiddleware from "../middleware/authMiddleware.js";
+const router = express.Router();
+router.post("/register", validateRegister, register);
+router.post("/login", validateLogin, login);
+router.post("/logout", logout);
+router.put("/update", authMiddleware, validateUpdate, updateProfile);
+router.get("/profile", authMiddleware, getProfile);
+export default router;
